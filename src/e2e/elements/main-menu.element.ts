@@ -23,4 +23,7 @@ export class MainMenu {
         const textContent = await this.registrationElement.textContent();
         return textContent;
     }
+    public async clickOnLogout(): Promise<void> {
+        await this.sighInElement.click();
+    }
 }

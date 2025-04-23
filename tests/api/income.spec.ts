@@ -1,8 +1,13 @@
 import { expect } from '@playwright/test';
 import { test } from 'api/fixtures/auth.fixture';
-import { normalizeIncomeItem } from '../../src/helpers/normalize-income';
+import { normalizeItem } from '../../src/helpers/normalize-item';
+import { deleteAllIncomes, deleteAllExpenses } from 'helpers/delete-all-items';
 
 test.describe('Incomes API', () => {
+    test.afterEach(async ({ incomeService, expenseService }) => {
+        await deleteAllIncomes(incomeService);
+        await deleteAllExpenses(expenseService);
+    });
     test('add new income transaction and check this transaction in list', async ({ incomeService }) => {
         const newIncomeTransaction: IncomeItem = {
             ID: 'ID-500',
@@ -28,6 +33,18 @@ test.describe('Incomes API', () => {
     });
 
     test('update income transaction and check this transaction in list', async ({ incomeService }) => {
+        const newIncomeTransaction: IncomeItem = {
+            ID: 'ID-500',
+            Date: '2025-04-22',
+            Income: '500',
+            Currency: 'UAH',
+            Comment: '150',
+            Cash: false
+        };
+
+        const response = await incomeService.createIncome(newIncomeTransaction);
+        expect(response).toContain('Successfully created income ID:');
+
         const allIncomes = await incomeService.getIncomes();
         const [monthKey, incomes] = Object.entries(allIncomes).find(([_, value]) => value.length > 0) || [];
 
@@ -41,7 +58,7 @@ test.describe('Incomes API', () => {
             Cash: !incomeToUpdate.Cash
         };
 
-        await incomeService.updateIncome(normalizeIncomeItem(updatedIncome));
+        await incomeService.updateIncome(normalizeItem(updatedIncome));
         const updatedIncomes = await incomeService.getIncomes();
         const updatedList = updatedIncomes['2025-2'] || [];
         const updatedItem = updatedList.find((item) => item.ID === incomeToUpdate.ID);
@@ -55,12 +72,23 @@ test.describe('Incomes API', () => {
     });
 
     test('delete income transaction and check this transaction in list', async ({ incomeService }) => {
+        const newIncomeTransaction: IncomeItem = {
+            ID: 'ID-500',
+            Date: '2025-04-22',
+            Income: '500',
+            Currency: 'UAH',
+            Comment: '150',
+            Cash: false
+        };
+
+        const response = await incomeService.createIncome(newIncomeTransaction);
+        expect(response).toContain('Successfully created income ID:');
         const allIncomes = await incomeService.getIncomes();
         const [monthKey, incomes] = Object.entries(allIncomes).find(([_, value]) => value.length > 0) || [];
         expect(incomes, 'No incomes available to delete').toBeTruthy();
 
         const incomeToDelete = incomes[0];
-        await incomeService.deleteIncome(normalizeIncomeItem(incomeToDelete));
+        await incomeService.deleteIncome(normalizeItem(incomeToDelete));
 
         const updatedIncomes = await incomeService.getIncomes();
         const updatedList = updatedIncomes[monthKey] || [];

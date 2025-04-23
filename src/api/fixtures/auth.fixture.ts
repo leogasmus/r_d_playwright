@@ -1,12 +1,14 @@
 import { test as baseTest } from '@playwright/test';
 import { ApiClient } from 'api/client';
 import { AuthService } from 'api/services/auth.service';
+import { ExpenseService } from 'api/services/expense.service';
 import { IncomesService } from 'api/services/income.service';
 
 interface AuthFixtures {
     apiClient: ApiClient;
     token: string;
     incomeService: IncomesService;
+    expenseService: ExpenseService;
 }
 
 export const test = baseTest.extend<AuthFixtures>({
@@ -25,5 +27,9 @@ export const test = baseTest.extend<AuthFixtures>({
     incomeService: async ({ apiClient, token }, use) => {
         const incomesService = new IncomesService(apiClient, token);
         await use(incomesService);
+    },
+    expenseService: async ({ apiClient, token }, use) => {
+        const expenseService = new ExpenseService(apiClient, token);
+        await use(expenseService);
     }
 });
