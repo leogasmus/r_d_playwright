@@ -1,0 +1,15 @@
+services:
+    tests:
+        build:
+            context: .
+            dockerfile: Dockerfile
+
+        networks:
+            - testnet
+        volumes:
+            - ./tests:/tests
+        command: ['npm', 'run', 'test']
+
+networks:
+    testnet:
+        driver: bridge

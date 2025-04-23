@@ -1,0 +1,41 @@
+{
+    "name": "r_d_playwright",
+    "version": "1.0.0",
+    "description": "��#\u0000 \u0000r\u0000_\u0000d\u0000_\u0000p\u0000l\u0000a\u0000y\u0000w\u0000r\u0000i\u0000g\u0000h\u0000t\u0000\r\u0000 \u0000",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint src/",
+        "lint:fix": "npm run lint -- --fix",
+        "test": "playwright test",
+        "test:api": "playwright test --project=api"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/leogasmus/r_d_playwright.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "bugs": {
+        "url": "https://github.com/leogasmus/r_d_playwright/issues"
+    },
+    "homepage": "https://github.com/leogasmus/r_d_playwright#readme",
+    "devDependencies": {
+        "@eslint/js": "^9.20.0",
+        "@playwright/test": "^1.52.0",
+        "@stylistic/eslint-plugin": "^3.1.0",
+        "@stylistic/eslint-plugin-ts": "^3.1.0",
+        "@types/node": "^22.14.1",
+        "@typescript-eslint/eslint-plugin": "^8.24.0",
+        "@typescript-eslint/parser": "^8.24.0",
+        "dotenv": "^16.5.0",
+        "eslint": "^9.20.1",
+        "eslint-config-prettier": "^10.0.1",
+        "eslint-plugin-prettier": "^5.2.3",
+        "eslint-plugin-unicorn": "^56.0.1",
+        "globals": "^15.14.0",
+        "ts-node": "^10.9.2",
+        "typescript-eslint": "^8.24.0"
+    }
+}
