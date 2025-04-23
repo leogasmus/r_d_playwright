@@ -39,22 +39,17 @@ export default defineConfig({
     projects: [
         {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'] }
+            use: { ...devices['Desktop Chrome'] },
+            testMatch: '**/e2e/**/*.spec.ts'
         },
-
         {
             name: 'firefox',
-            use: { ...devices['Desktop Firefox'] }
+            use: { ...devices['Desktop Firefox'] },
+            testMatch: '**/e2e/**/*.spec.ts'
         },
-
-        {
-            name: 'webkit',
-            use: { ...devices['Desktop Safari'] }
-        },
-
         {
             name: 'api',
-            testMatch: 'api/*.spec.ts',
+            testMatch: '**/api/**/*.spec.ts',
             retries: 0
         }
 
